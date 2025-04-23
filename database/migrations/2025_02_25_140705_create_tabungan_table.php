@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->integer('total_bobot')->nullable();
+            $table->foreignId('operator_id')->nullable()->constrained('users');
             $table->enum('status',['proses','pengambilan','sampai','inputdata','selesai' ])->default('proses');
             $table->integer('saldo')->nullable();
             $table->boolean('hapusdata')->default(false);

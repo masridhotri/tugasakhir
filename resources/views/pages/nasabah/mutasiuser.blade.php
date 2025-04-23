@@ -32,7 +32,7 @@
                         <div class="card shadow border-0">
                             <div
                                 class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0"><i class="fas fa-exchange-alt"></i> Riwayat Mutasi Saldo</h5>
+                                <h5 class="mb-0"><i class="fas fa-exchange-alt"></i> Riwayat Tabungan user</h5>
                                 {{-- <button class="btn btn-sm btn-light text-danger fw-bold" onclick="resetMutasi()">
                                     <i class="fas fa-trash"></i> Reset Data
                                 </button> --}}
@@ -66,8 +66,11 @@
                                                 <th><i class="fas fa-calendar-day"></i>Nama</th>
                                                 <th><i class="fas fa-sticky-note"></i>Status</th>
                                                 <th><i class="fas fa-tags"></i>Operator</th>
+                                                <th><i class="fas fa-tags"></i>tanggal</th>
                                                 <th><i class="fas fa-money-bill-wave"></i>Totalbobot</th>
+                                                <th><i class="fas fa-wallet"></i> Total Pemasukan</th>
                                                 <th><i class="fas fa-wallet"></i>Aksi</th>
+
                                             </tr>
                                         </thead>
                                         <tbody id="mutasiTbody" class="text-center">
@@ -76,15 +79,20 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $tabungan->user->name }}</td>
                                                     <td>{{ $tabungan->status }}</td>
-                                                    <td>-</td>
+                                                    <td>{{ $tabungan->operator?->name ?? '-' }}</td>
+                                                    <td>{{ $tabungan->updated_at->format('d M Y')}}</td>
                                                     <td>{{ $tabungan->total_bobot }}</td>
+                                                    <td>
+                                                        Rp {{ number_format(optional($tabungan->mutasi)->sum('total_harga') ?? 0) }}
+                                                    </td>
+                                                    
                                                     <td>
                                                         <div class="d-flex justify-content-center">
                                                             <button type="button" class="btn btn-success"><i
                                                                     class="bi bi-pencil-square"></i></button>
                                                             <button type="button" class="btn btn-danger"><i
                                                                     class="bi bi-trash"></i></button>
-                                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaldata"><i
+                                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaldata{{$tabungan->id}}"><i
                                                                     class="bi bi-eye"></i></button>
 
                                                         </div>
@@ -95,7 +103,8 @@
                                     </table>
                                 </div>
 
-                                <div class="modal fade" id="modaldata" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                                @foreach($tabunganall as $tabung)
+                                <div class="modal fade" id="modaldata{{$tabung->id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                       <div class="modal-content">
                                         <div class="modal-header">
@@ -103,7 +112,32 @@
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                          Show a second modal and hide this one with the button below.
+                                            <table class="table table-bordered table-sm">
+                                                <thead class="table-dark text-white">
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Item</th>
+                                                        <th>Total Harga</th>
+                                                        <th>Bobot</th>
+                                                        <th>Tanggal</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @forelse ($tabung->mutasi as $index => $mutasi)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $mutasi->jenis?->nama_sampah ?? '-' }}</td>
+                                                            <td>{{ number_format($mutasi->total_harga) }}</td>
+                                                            <td>{{ $mutasi->bobot }}</td>
+                                                            <td>{{ $mutasi->created_at->format('d M Y') }}</td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="4" class="text-center">Tidak ada data mutasi</td>
+                                                        </tr>
+                                                    @endforelse
+                                                </tbody>
+                                            </table>
                                         </div>
                                         <div class="modal-footer">
                                           <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
@@ -111,12 +145,12 @@
                                       </div>
                                     </div>
                                   </div>
-
+                                @endforeach
                                 <!-- Total Saldo -->
-                                <div class="mt-3 text-end">
+                                {{-- <div class="mt-3 text-end">
                                     <h5><strong>Total Saldo:</strong> <span id="totalSaldo" class="fw-bold text-success">Rp
                                             0</span></h5>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

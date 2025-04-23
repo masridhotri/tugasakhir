@@ -15,10 +15,19 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if (!auth()->check() || !in_array(auth()->user()->role, $roles)) {
+        $user = auth()->user();
+
+        if (!$user || !in_array($user->role, $roles)) {
+            // Redirect sesuai role
+            if ($user->role === 'admin') {
+                return redirect()->route('dashboard.admin');
+            } elseif ($user->role === 'operator' || $user->role === 'user') {
+                return redirect()->route('dashboard');
+            }
+    
             abort(403, 'Akses Ditolak');
         }
-
+    
         return $next($request);
     }
 }

@@ -6,12 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\tabungan;
 use App\Models\mutasi;
+use App\Models\jenis;
+
 use Illuminate\Support\Facades\Auth;
 
 class TabunganController extends Controller
 {
     public function index(){
-        $tabunganall = tabungan::with('mutasi')->get();
+        
+        $tabunganall = Tabungan::with(['operator', 'user', 'mutasi.jenisMutasi'])->get();
         return view('pages.nasabah.mutasiuser',compact('tabunganall'));
     }
     public function new()
@@ -31,7 +34,8 @@ public function update(request $request,$id){
     if ($tabung && $tabung->status === 'proses') {
         DB::table('tabungan')
             ->where('id', $id)
-            ->update(['status' => 'pengambilan']);
+            ->update(['status' => 'pengambilan',
+                      'operator_id'=>Auth::id()]);
     }
     return redirect()->back()->with('success', 'Status berhasil diubah!');
 }
@@ -53,67 +57,49 @@ public function input(request $request,$id){
             ->where('id', $id)
             ->update(['status' => 'inputdata']);
     }
-    return redirect()->back()->with('success', 'Status berhasil diubah!');
+    return redirect('/dashboard')->with('success', 'Status berhasil diubah!');
 }
-public function store(Request $request, $id)
+
+public function store(Request $request, $id)    
+
 {
     // Validasi input
+    $request->validate([
+        'items' => 'required|array',
+        'items.*.jenismutasi_id' => 'required|integer',
+        'items.*.bobot' => 'required|numeric|min:1',
+        'items.*.total_harga' => 'required|numeric|min:0',
+    ]);
 
-    // $request->validate([
-    //     'tabungan_id' => 'required|exists:tabungan,id',
-    //     'jenismutasi_id' => 'required|integer|exists:jenismutasi,id',
-    //     'bobot' => 'required|numeric|min:0',
-    //     'total_harga' => 'required|numeric|min:0',
-    // ]);
+    // Ambil data tabungan berdasarkan ID
+    $tabungan = Tabungan::findOrFail($id); // Gunakan `Tabungan` dengan huruf kapital
+    $items = $request->input('items');
 
-    DB::beginTransaction();
-
-    try {
-        // Ambil semua data JSON
-        $data = $request->all(); // Laravel otomatis decode JSON jika header Content-Type: application/json
-
-        $items = $data['items'] ?? [];
-
-        if (empty($items)) {
-            return response()->json(['message' => 'Data item kosong'], 400);
-        }
-
-        $tabungan = tabungan::findOrFail($id);
-
-        foreach ($items as $item) {
-            // Validasi item satu-satu (bisa ditambah if butuh strict)
-            $jenismutasi_id = $item['jenismutasi_id'] ?? null;
-            $bobot = $item['bobot'] ?? 0;
-            $total_harga = $item['total_harga'] ?? 0;
-
-            if (!$jenismutasi_id || $bobot <= 0 || $total_harga <= 0) {
-                continue; // lewati kalau ada item aneh
-            }
-
-            mutasi::create([
-                'tabungan_id' => $id,
-                'jenismutasi_id' => $jenismutasi_id,
-                'bobot' => $bobot,
-                'total_harga' => $total_harga,
-                'admin_id' => auth()->id(),
-            ]);
-        }
-
-        // Update tabungan
-        $tabungan->update([
-            'total_bobot' => $tabungan->mutasi->sum('bobot'),
-            'saldo' => $tabungan->mutasi->sum('total_harga'),
-            'status' => 'selesai',
+    // Proses setiap item dan simpan ke tabel mutasi
+    foreach ($items as $item) {
+        Mutasi::create([ // Gunakan `Mutasi` dengan huruf kapital
+            'tabungan_id' => $tabungan->id, // Gunakan ID tabungan, bukan objek
+            'jenismutasi_id' => $item['jenismutasi_id'],
+            'bobot' => $item['bobot'],
+            'total_harga' => $item['total_harga'],
+            'admin_id' => Auth::id(), // Menyimpan ID admin yang sedang login
         ]);
-
-        DB::commit();
-
-        return response()->json(['message' => 'Data berhasil ditambahkan dan status diset jadi selesai!']);
-
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return response()->json(['message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
     }
+
+    // Update total bobot dan saldo berdasarkan data mutasi yang sudah ditambahkan
+    $totalBobot = $tabungan->mutasi->sum('bobot');
+    $totalSaldo = $tabungan->mutasi->sum('total_harga');
+
+    // Update tabungan dengan total bobot dan saldo
+    $tabungan->update([
+        'total_bobot' => $totalBobot,
+        'saldo' => $totalSaldo,
+        'status' => 'selesai', // Menandakan status tabungan sudah selesai
+    ]);
+
+    // Redirect dengan pesan sukses
+    return redirect()->back()->with('success', 'Status berhasil diubah!');
 }
+
 
 }

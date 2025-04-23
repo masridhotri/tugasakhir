@@ -24,6 +24,7 @@
                 </div>
             </div>
         </div>
+
         <div class="app-content">
             <div class="container-fluid py-4">
                 <div class="row">
@@ -32,9 +33,9 @@
                             <div
                                 class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0"><i class="fas fa-receipt"></i> Daftar Transaksi Setor Sampah</h5>
-                                {{-- <button class="btn btn-sm btn-light text-danger fw-bold" onclick="resetTransaksi()">
-                                <i class="fas fa-trash"></i> Reset Data
-                            </button> --}}
+                                <button class="btn btn-sm btn-light text-danger fw-bold" onclick="resetTransaksi()">
+                                    <i class="fas fa-trash"></i> Reset Data
+                                </button>
                             </div>
                             <div class="card-body">
                                 <!-- Filter -->
@@ -62,26 +63,18 @@
 
                                 <!-- Tabel -->
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-bordered ">
+                                    <table class="table table-hover table-bordered align-middle">
                                         <thead class="table-dark text-white">
                                             <tr class="text-center">
-                                                <th>no</th>
                                                 <th><i class="fas fa-calendar-day"></i> Tanggal</th>
-                                                <th><i class="fas fa-recycle"></i>operator</th>
-                                                <th><i class="fas fa-weight-hanging"></i>Total Bobot (kg)</th>
+                                                <th><i class="fas fa-recycle"></i> Jenis Sampah</th>
+                                                <th><i class="fas fa-weight-hanging"></i> Berat (kg)</th>
+                                                <th><i class="fas fa-money-bill-wave"></i> Nilai Tukar</th>
                                                 <th><i class="fas fa-wallet"></i> Saldo</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="">
-                                                @foreach ($tabungan as $tabung)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $tabung->created_at }} </td>
-                                                        <td>{{$tabung->operator_id}} </td>
-                                                    <td>{{ $tabung->total_bobot }} </td>
-                                                    <td>Rp{{ number_format($tabung->saldo, 0, ',', '.') }}</td>
-                                                </tr>
-                                                @endforeach
+                                        <tbody id="transaksiTbody" class="text-center">
+                                           
                                         </tbody>
                                     </table>
                                 </div>

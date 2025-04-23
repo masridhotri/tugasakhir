@@ -7,8 +7,8 @@ use App\Http\Controllers\TabunganController;
 use App\Http\Controllers\TestingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JenimutasiController;
-
-
+use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\NasabahController;
 
 
 
@@ -26,17 +26,27 @@ use App\Http\Controllers\JenimutasiController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboardadmin', [DashboardController::class, 'admin'])->name('dashboard.admin');
+});
+
 
 Route::get('/dashboard', [DashboardController::class, 'indexe'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'role:operator,user'])
     ->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () { 
 
     route::get('user',[UserController::class, 'user'])->name('user.index');
     route::post('/user/updatedata',[UserController::class, 'updatedata'])->name('updatedata');
 
     Route::get('/indexe', [DashboardController::class, 'indexe'])->name('indexe');
+    Route::get('/detailjemput/{id}', [DashboardController::class, 'detailjemput'])->name('detailjemput');
+
+    Route::get('indexuser', [NasabahController::class, 'indexuser'])->name('user');
+    Route::get('saldouser', [NasabahController::class, 'saldouser'])->name('saldouser');
+    Route::post('/tarik-saldo/{id}', [NasabahController::class, 'tarik'])->name('saldo');
+
 
 
 
@@ -46,9 +56,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/jenis/destroy/{id}', [JenimutasiController::class, 'destroy'])->name('jenis.destroy');
 
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [DashboardController::class, 'profile'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    route::get('enam',[OperatorController::class, 'enam'])->name('enam');
 
 
     route::get('tabungan',[TabunganController::class, 'index'])->name('tabungan.index');
@@ -68,8 +80,7 @@ Route::middleware('auth')->group(function () {
     route::get('seccond',[TestingController::class, 'seccond'])->name('dua');
     route::get('tiga',[TestingController::class, 'tiga'])->name('tiga');
     route::get('empat',[TestingController::class, 'empat'])->name('four');
-    route::get('lima',[TestingController::class, 'lima'])->name('lima');
-    route::get('enam',[TestingController::class, 'enam'])->name('enam');
+    // route::get('lima',[TestingController::class, 'lima'])->name('lima');
     route::get('tujuh',[TestingController::class, 'tujuh'])->name('tujuh');
 });
 

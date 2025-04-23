@@ -7,7 +7,7 @@
             <img src="../../dist/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow" />
             <!--end::Brand Image-->
             <!--begin::Brand Text-->
-            <span class="brand-text fw-light">AdminLTE 4</span>
+            <span class="brand-text fw-light">ecoBank</span>
             <!--end::Brand Text-->
         </a>
         <!--end::Brand Link-->
@@ -27,7 +27,6 @@
                     </a>
                 </li>
                 @if (Auth::user()->role === 'admin')
-                  
                     <li class="nav-item menu-open">
                         <a href="{{ route('user.index') }}" class="nav-link active">
                             <i class="nav-icon bi bi-speedometer"></i>
@@ -62,22 +61,36 @@
                     </li>
                 @endif
 
-                <li class="nav-item menu-open">
-                    <a href="/lima" class="nav-link active">
-                        <i class="nav-icon bi bi-speedometer"></i>
-                        <p>
-                            pengambila operator
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item menu-open">
-                    <a href="/tiga" class="nav-link active">
-                        <i class="nav-icon bi bi-speedometer"></i>
-                        <p>
-                            request sampah
-                        </p>
-                    </a>
-                </li>
+
+                {{-- for operator --}}
+                @if (Auth::user()->role === 'operator')
+                    <li class="nav-item menu-open">
+                        <a href="/enam" class="nav-link active">
+                            <i class="nav-icon bi bi-speedometer"></i>
+                            <p>
+                                Riwayat pengambilan
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (Auth::user()->role === 'user')
+                    <li class="nav-item menu-open">
+                        <a href="/indexuser" class="nav-link active">
+                            <i class="nav-icon bi bi-speedometer"></i>
+                            <p>
+                                Riwayat pengambilan
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item menu-open">
+                        <a href="/saldouser" class="nav-link active">
+                            <i class="nav-icon bi bi-speedometer"></i>
+                            <p>
+                                Riwayat mutasi
+                            </p>
+                        </a>
+                    </li>
+                @endif
             </ul>
             <!--end::Sidebar Menu-->
         </nav>

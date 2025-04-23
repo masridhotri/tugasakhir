@@ -18,12 +18,12 @@ class TestingController extends Controller
     public function empat(){
         return view('pages.operator.list');
     }
-     public function lima(){
-        return view('pages.operator.pengambilan');
-    }
-    public function enam(){
-        return view('pages.operator.riwayat');
-    }
+    //  public function lima(){
+    //     return view('pages.operator.pengambilan');
+    // }
+    // public function enam(){
+    //     return view('pages.operator.riwayat');
+    // }
     public function tujuh(){
         return view('pages.admin.management');
     }

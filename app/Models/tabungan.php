@@ -19,9 +19,15 @@ class tabungan extends Model
     ];
 
     // Relasi ke User
+    // App\Models\Tabungan.php
+public function operator()
+{
+    return $this->belongsTo(User::class, 'operator_id');
+}
+
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // Relasi ke Mutasi

@@ -29,7 +29,7 @@ class mutasi extends Model
     // Relasi ke Jenis Mutasi
     public function jenisMutasi()
     {
-        return $this->belongsTo(jenismutasi::class, 'jenismutasi_id');
+        return $this->belongsTo(jenis::class, 'jenismutasi_id');
     }
 
     // Relasi ke Admin (User)

@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class jenis extends Model
 {
     use HasFactory;
-    protected $fillable = ["nama","harga","foto","deskripsi"];
+    protected $table = 'jenismutasi'; // optional, hanya kalau mau eksplisit
+
+    protected $fillable = ["nama_sampah","harga","foto","deskripsi"];
 
     protected static function boot()
     {

@@ -15,7 +15,8 @@
                         <nav>
                             <ol class="breadcrumb float-sm-end">
                                 <li class="breadcrumb-item">
-                                    <a href="#" class="text-decoration-none text-secondary"><i class="bi bi-house-door"></i> Home</a>
+                                    <a href="#" class="text-decoration-none text-secondary"><i
+                                            class="bi bi-house-door"></i> Home</a>
                                 </li>
                                 <li class="breadcrumb-item active text-primary">Riwayat Tugas</li>
                             </ol>
@@ -38,7 +39,8 @@
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-search"></i></span>
-                            <input type="text" class="form-control" id="searchInput" placeholder="Cari nama atau alamat...">
+                            <input type="text" class="form-control" id="searchInput"
+                                placeholder="Cari nama atau alamat...">
                         </div>
                     </div>
                 </div>
@@ -47,7 +49,7 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <button class="btn btn-primary" onclick="exportToCSV()">
-                            <i class="bi bi-download"></i> Export CSV
+                            <i class="bi bi-download"></i> Export
                         </button>
                     </div>
                     <div class="col-md-6 text-md-end">
@@ -65,42 +67,28 @@
 
                 <!-- Tabel Riwayat -->
                 <div class="table-responsive">
-                    <table class="table table-hover table-bordered text-center align-middle" id="historyTable">
+                    <table class="table table-hover table-bordered align-middle" id="historyTable">
                         <thead class="table-dark">
                             <tr>
                                 <th>#</th>
                                 <th><i class="bi bi-person-fill"></i> Nama</th>
                                 <th><i class="bi bi-geo-alt-fill"></i> Alamat</th>
-                                <th><i class="bi bi-recycle"></i> Jumlah Sampah</th>
                                 <th><i class="bi bi-calendar-date"></i> Tanggal</th>
                                 <th><i class="bi bi-check-circle"></i> Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="table-success">
-                                <td>1</td>
-                                <td>Ahmad</td>
-                                <td>Jl. Merdeka No. 10</td>
-                                <td>5 kg</td>
-                                <td>10 Maret 2025</td>
-                                <td><span class="badge bg-success">Selesai</span></td>
-                            </tr>
-                            <tr class="table-warning">
-                                <td>2</td>
-                                <td>Budi</td>
-                                <td>Jl. Mawar No. 15</td>
-                                <td>3 kg</td>
-                                <td>9 Maret 2025</td>
-                                <td><span class="badge bg-warning text-dark">Dalam Proses</span></td>
-                            </tr>
-                            <tr class="table-danger">
-                                <td>3</td>
-                                <td>Siti</td>
-                                <td>Jl. Anggrek No. 20</td>
-                                <td>4 kg</td>
-                                <td>8 Maret 2025</td>
-                                <td><span class="badge bg-danger">Dibatalkan</span></td>
-                            </tr>
+                                @foreach ($tabungan as $taun)
+                                <tr class="table-success">
+
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $taun->user->name }}</td>
+                                    <td>{{ $taun->user->alamat }}</td>
+                                    <td>{{ $taun->created_at }}</td>
+                                    <td>{{ $taun->status }}</td>
+                                </tr>
+
+                                @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -111,44 +99,47 @@
 
     <!-- JavaScript -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const searchInput = document.getElementById('searchInput');
-            const filterStatus = document.getElementById('filterStatus');
-            const rows = document.querySelectorAll('#historyTable tbody tr');
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const searchInput = document.getElementById('searchInput');
+        //     const filterStatus = document.getElementById('filterStatus');
+        //     const rows = document.querySelectorAll('#historyTable tbody tr');
 
-            // Fungsi Pencarian
-            searchInput.addEventListener('keyup', function () {
-                let filter = searchInput.value.toLowerCase();
-                rows.forEach(row => {
-                    let name = row.cells[1].textContent.toLowerCase();
-                    let address = row.cells[2].textContent.toLowerCase();
-                    row.style.display = (name.includes(filter) || address.includes(filter)) ? '' : 'none';
-                });
-            });
+        //     // Fungsi Pencarian
+        //     searchInput.addEventListener('keyup', function() {
+        //         let filter = searchInput.value.toLowerCase();
+        //         rows.forEach(row => {
+        //             let name = row.cells[1].textContent.toLowerCase();
+        //             let address = row.cells[2].textContent.toLowerCase();
+        //             row.style.display = (name.includes(filter) || address.includes(filter)) ? '' :
+        //                 'none';
+        //         });
+        //     });
 
-            // Fungsi Filter Status
-            filterStatus.addEventListener('change', function () {
-                let status = filterStatus.value;
-                rows.forEach(row => {
-                    let rowStatus = row.cells[5].textContent.trim();
-                    row.style.display = (status === '' || rowStatus === status) ? '' : 'none';
-                });
-            });
-        });
+        //     // Fungsi Filter Status
+        //     filterStatus.addEventListener('change', function() {
+        //         let status = filterStatus.value;
+        //         rows.forEach(row => {
+        //             let rowStatus = row.cells[5].textContent.trim();
+        //             row.style.display = (status === '' || rowStatus === status) ? '' : 'none';
+        //         });
+        //     });
+        // });
 
-        // Export ke CSV
-        function exportToCSV() {
-            let table = document.getElementById('historyTable');
-            let rows = Array.from(table.rows);
-            let csvContent = rows.map(row => Array.from(row.cells).map(cell => cell.textContent).join(',')).join('\n');
-            let blob = new Blob([csvContent], { type: 'text/csv' });
-            let url = URL.createObjectURL(blob);
-            let a = document.createElement('a');
-            a.href = url;
-            a.download = 'riwayat_tugas.csv';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
+        // // Export ke CSV
+        // function exportToCSV() {
+        //     let table = document.getElementById('historyTable');
+        //     let rows = Array.from(table.rows);
+        //     let csvContent = rows.map(row => Array.from(row.cells).map(cell => cell.textContent).join(',')).join('\n');
+        //     let blob = new Blob([csvContent], {
+        //         type: 'text/csv'
+        //     });
+        //     let url = URL.createObjectURL(blob);
+        //     let a = document.createElement('a');
+        //     a.href = url;
+        //     a.download = 'riwayat_tugas.csv';
+        //     document.body.appendChild(a);
+        //     a.click();
+        //     document.body.removeChild(a);
+        // }
     </script>
 @endsection
