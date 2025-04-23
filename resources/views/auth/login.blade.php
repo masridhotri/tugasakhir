@@ -40,9 +40,9 @@
         </div>
 
         <div class="flex items-center justify-center mt-4 ">
-            <x-primary-button class="w-3">
+            <x-button >
                 {{ __('Log in') }}
-            </x-primary-button>
+            </x-button>
         </div>
     </form>
 

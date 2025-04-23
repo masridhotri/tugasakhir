@@ -8,7 +8,7 @@
             <i class="bi bi-list"></i>
           </a>
         </li>
-        <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
+        <li class="nav-item d-none d-md-block"><a href="/dashboard" class="nav-link">Home</a></li>
         <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
       </ul>
       <!--end::Start Navbar Links-->
@@ -154,7 +154,7 @@
               class="user-image rounded-circle shadow"
               alt="User Image"
             />
-            <span class="d-none d-md-inline">Alexander Pierce</span>
+            <span class="d-none d-md-inline">{{Auth::user()->name}}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
             <!--begin::User Image-->
@@ -165,7 +165,7 @@
                 alt="User Image"
               />
               <p>
-                Alexander Pierce - Web Developer
+               {{Auth::user()->email}}
                 <small>Member since Nov. 2023</small>
               </p>
             </li>
