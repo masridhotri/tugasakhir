@@ -25,7 +25,7 @@ class DashboardController extends Controller
 // Ambil tabungan dengan status proses, pengambilan, sampai
 $tabungproses = DB::table('tabungan')
 ->join('users', 'tabungan.user_id', '=', 'users.id')
-->whereIn('tabungan.status', ['proses','pengambilan','sampai'])
+->whereIn('tabungan.status', ['proses','inputdata'])
 ->select('tabungan.*', 'users.name as nama_user','users.alamat as alamat_user')
 ->get();
 
@@ -38,9 +38,7 @@ $tabungproses = DB::table('tabungan')
 $user = Auth::user();
 $tabungan = tabungan::where('user_id',$user->id)->get();
 $tabungtotalreq = tabungan::where('status', 'proses')->count();
-$Nominal = Mutasi::whereHas('tabungan', function ($query) {
-    $query->where('user_id', auth()->id());
-})->whereNotNull('nominal')->sum('nominal');
+
 
 $tabungtuntas = tabungan::where('status', 'selesai')
                         ->where('operator_id', $user->id)
@@ -59,7 +57,7 @@ $totalPerBulan = DB::table('tabungan')
     ->pluck('total', 'bulan') // hasilnya: [1 => 5, 2 => 3, ...]
     ->toArray();
  
-$tabunganproses = tabungan::where('status',['pengambilan','sampai'])
+$tabunganproses = tabungan::where('status',['inputdata'])
                         ->where('operator_id', $user->id)
                         ->count();
 $saldo = tabungan::where('user_id',$user->id)->sum('saldo'); 
@@ -83,7 +81,6 @@ for ($i = 1; $i <= 12; $i++) {
 return view('pages.nasabah.dashuser', [
 'tabungproses' => $tabungproses,
 'saldo'=>$saldo,
-'Nominal'=>$Nominal,
 'tabungan'=>$tabungan,
 'totalPerBulan'=>$totalPerBulan,
 'chartall'=>$chartall,
@@ -107,11 +104,7 @@ $tabungjadi = DB::table('tabungan')
             ->whereIn('tabungan.status', ['selesai'])
             ->select('tabungan.*', 'users.name as nama_user','users.alamat as alamat_user')
             ->get();
-$tabunginput = DB::table('tabungan')
-->join('users', 'tabungan.user_id', '=', 'users.id')
-->whereIn('tabungan.status', ['inputdata'])
-->select('tabungan.*', 'users.name as nama_user','users.alamat as alamat_user')
-->get();
+
 $jenismutasi = DB::table('jenismutasi')->select('id', 'nama_sampah', 'harga')->get();
 $pendapatanPerJenis = DB::table('mutasi')
 ->join('jenismutasi', 'mutasi.jenismutasi_id', '=', 'jenismutasi.id')
@@ -140,7 +133,6 @@ for ($i = 1; $i <= 12; $i++) {
 
     return view('pages.admin.list',[
         'tabungjadi'=>$tabungjadi,
-        'tabunginput' => $tabunginput,
         'jenismutasi' => $jenismutasi,
         'pendapatanPerJenis' => $pendapatanPerJenis,
         'bobotabung'=>$bobotabung,
@@ -159,7 +151,10 @@ $tabungan = tabungan::where('user_id',$user->id)->get();
 }
 public function detailjemput($id){
     $tabungana = tabungan::find($id);
-    return view('pages.operator.pengambilan',compact('tabungana'));
+    $jenismutasi = DB::table('jenismutasi')->select('id', 'nama_sampah', 'harga')->get();
+
+
+    return view('pages.operator.pengambilan',compact('tabungana','jenismutasi'));
 }
 
 }

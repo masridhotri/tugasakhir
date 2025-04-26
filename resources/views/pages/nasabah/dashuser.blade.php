@@ -42,7 +42,6 @@
                             <div class="col-md-3">
                                 <div class="card shadow text-center p-3">
                                     <div class="text-muted">uang keluar</div>
-                                    <h4 class="text-success fw-bold"> {{ $Nominal ? '-' . $Nominal . ' Kg' : '' }}
                                     </h4>
                                 </div>
                             </div>
@@ -86,7 +85,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('saldo', $mutasi->id) }}" method="POST">
+                                    <form action="{{ route('saldo') }}" method="POST">
                                         @csrf
                                         <label for="nominal">Isi Nominal Pengeluaran:</label>
                                         <input type="number" name="nominal" min="1" required>

@@ -34,7 +34,7 @@ public function update(request $request,$id){
     if ($tabung && $tabung->status === 'proses') {
         DB::table('tabungan')
             ->where('id', $id)
-            ->update(['status' => 'pengambilan',
+            ->update(['status' => 'inputdata',
                       'operator_id'=>Auth::id()]);
     }
     return redirect()->back()->with('success', 'Status berhasil diubah!');
@@ -82,7 +82,7 @@ public function store(Request $request, $id)
             'jenismutasi_id' => $item['jenismutasi_id'],
             'bobot' => $item['bobot'],
             'total_harga' => $item['total_harga'],
-            'admin_id' => Auth::id(), // Menyimpan ID admin yang sedang login
+            'operator_id' => Auth::id(), // Menyimpan ID admin yang sedang login
         ]);
     }
 
@@ -98,7 +98,7 @@ public function store(Request $request, $id)
     ]);
 
     // Redirect dengan pesan sukses
-    return redirect()->back()->with('success', 'Status berhasil diubah!');
+    return redirect('/dashboard')->with('success', 'Status berhasil diubah!');
 }
 
 

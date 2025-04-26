@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JenimutasiController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\NasabahController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 
 
@@ -24,7 +25,7 @@ use App\Http\Controllers\NasabahController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('selamat');
 });
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboardadmin', [DashboardController::class, 'admin'])->name('dashboard.admin');
@@ -45,7 +46,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('indexuser', [NasabahController::class, 'indexuser'])->name('user');
     Route::get('saldouser', [NasabahController::class, 'saldouser'])->name('saldouser');
-    Route::post('/tarik-saldo/{id}', [NasabahController::class, 'tarik'])->name('saldo');
+    Route::post('/tarik-saldo', [NasabahController::class, 'tarik'])->name('saldo');
 
 
 
@@ -71,11 +72,6 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/tabungan/store/{id}', [TabunganController::class, 'store'])->name('tabung.store');
 
-
-
-
-
-
     route::get('first',[TestingController::class, 'first'])->name('satu');
     route::get('seccond',[TestingController::class, 'seccond'])->name('dua');
     route::get('tiga',[TestingController::class, 'tiga'])->name('tiga');
@@ -83,5 +79,7 @@ Route::middleware('auth')->group(function () {
     // route::get('lima',[TestingController::class, 'lima'])->name('lima');
     route::get('tujuh',[TestingController::class, 'tujuh'])->name('tujuh');
 });
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);
 
 require __DIR__.'/auth.php';

@@ -16,9 +16,8 @@ return new class extends Migration
             $table->foreignId('tabungan_id')->constrained('tabungan');
             $table->integer('total_harga');
             $table->integer('bobot');
-            $table->integer('nominal')->nullable();
             $table->foreignId('jenismutasi_id')->constrained('jenismutasi');
-            $table->foreignId('admin_id')->nullable()->constrained('users');
+            $table->foreignId('operator_id')->nullable()->constrained('users');
             $table->boolean('hapusdata')->default(false);
             $table->timestamps();
         });

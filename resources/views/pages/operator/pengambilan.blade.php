@@ -80,7 +80,58 @@
                                     @csrf
                                     <button type="submit" class="btn btn-success w-100">Input</button>
                                 </form>
+                            @elseif ($tabungana->status === 'inputdata')
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#editmodal{{ $tabungana->id }}">
+                                    input data
+                                </button>
                             @endif
+                        </div>
+                        <div class="modal fade" id="editmodal{{ $tabungana->id }}" aria-hidden="true" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-warning text-white">
+                                        <h5 class="modal-title fw-bold"><i class="fas fa-edit"></i>input
+                                            data
+                                            sampah user</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label class="form-label">nama</label>
+                                        <input type="text" value="{{ $tabungana->user->name }}" class="form-control"
+                                            readonly>
+
+                                        <form id="formTabung" action="{{ route('tabung.store', $tabungana->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <label class="form-label">Jenis Sampah</label>
+                                            <div class="mb-2 d-flex">
+                                                <select name="select" id="selectjenis" class="form-control me-2">
+                                                    <option value="">-- Pilih Jenis Sampah --</option>
+                                                    @foreach ($jenismutasi as $jenis)
+                                                        <option value="{{ $jenis->id }}"
+                                                            dataharga="{{ $jenis->harga }}">
+                                                            {{ $jenis->nama_sampah }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <input type="number" name="bobot" id="Jumlah"
+                                                    class="form-control me-2" placeholder="Bobot (kg)">
+                                                <input type="text" name="harga" id="harga"
+                                                    class="form-control me-2" placeholder="Total Harga (Rp)" readonly>
+                                                <button type="button" id="btnTambah"
+                                                    class="btn btn-primary">Tambah</button>
+                                            </div>
+
+                                            <div id="lisitem"></div>
+
+                                            <button type="submit" class="btn btn-success mt-2">Kirim</button>
+                                        </form>
+
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Map -->
@@ -101,6 +152,100 @@
             </div>
         </div>
     </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function formatRupiah(amount) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(amount);
+            }
+
+            const selectJenis = document.getElementById('selectjenis');
+            const inputJumlah = document.getElementById('Jumlah');
+            const inputHarga = document.getElementById('harga');
+            const btnTambah = document.getElementById('btnTambah');
+            const listItem = document.getElementById('lisitem');
+            const form = document.getElementById('formTabung');
+
+            let itemCounter = 0;
+
+            const hitungTotalHarga = () => {
+                const selected = selectJenis.options[selectJenis.selectedIndex];
+                const harga = parseFloat(selected.getAttribute('dataharga')) || 0;
+                const jumlah = parseFloat(inputJumlah.value || 0);
+                const total = harga * jumlah;
+                inputHarga.value = formatRupiah(total);
+            };
+
+            selectJenis.addEventListener('change', hitungTotalHarga);
+            inputJumlah.addEventListener('input', hitungTotalHarga);
+
+            btnTambah.addEventListener('click', () => {
+                const selectedOption = selectJenis.options[selectJenis.selectedIndex];
+                const jumlah = parseFloat(inputJumlah.value || 0);
+                const jenisId = selectedOption.value;
+
+                if (!jenisId || isNaN(jumlah) || jumlah <= 0) {
+                    alert("Pilih jenis sampah dan isi jumlah > 0");
+                    return;
+                }
+
+                const isDuplicate = [...form.querySelectorAll('input[name$="[jenismutasi_id]"]')]
+                    .some(input => input.value === jenisId);
+
+                if (isDuplicate) {
+                    alert("Jenis sampah ini sudah ditambahkan.");
+                    return;
+                }
+
+                const hargaPerKg = parseFloat(selectedOption.getAttribute('dataharga'));
+                const totalHarga = hargaPerKg * jumlah;
+
+                // Hidden inputs
+                const createHidden = (name, value) => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = `items[${itemCounter}][${name}]`;
+                    input.value = value;
+                    input.dataset.index = itemCounter;
+                    return input;
+                };
+
+                form.appendChild(createHidden('jenismutasi_id', jenisId));
+                form.appendChild(createHidden('bobot', jumlah));
+                form.appendChild(createHidden('total_harga', totalHarga));
+
+                // Preview
+                const preview = document.createElement('div');
+                preview.className = 'mb-2 d-flex align-items-center item-row';
+                preview.dataset.index = itemCounter;
+                preview.innerHTML = `
+                    <select class="form-control me-2" disabled>
+                        <option>${selectedOption.text}</option>
+                    </select>
+                    <input type="number" class="form-control me-2" value="${jumlah}" readonly>
+                    <input type="text" class="form-control me-2" value="${formatRupiah(totalHarga)}" readonly>
+                    <button type="button" class="btn btn-danger btn-hapus-item">Hapus</button>
+                `;
+
+                preview.querySelector('.btn-hapus-item').addEventListener('click', () => {
+                    form.querySelectorAll(`input[data-index="${preview.dataset.index}"]`).forEach(
+                        i => i.remove());
+                    preview.remove();
+                });
+
+                listItem.appendChild(preview);
+                itemCounter++;
+
+                // Reset input
+                selectJenis.value = '';
+                inputJumlah.value = '';
+                inputHarga.value = '';
+            });
+        });
+    </script>
 
     <!-- Leaflet.js & Routing -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

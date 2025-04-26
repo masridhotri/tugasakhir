@@ -45,6 +45,8 @@
             </x-button>
         </div>
     </form>
+    <p class="mt-4">Belum punya akun?<a href="/register"> Daftar</a></p>
+
 
     <div class="divider d-flex align-items-center my-4">
         <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>

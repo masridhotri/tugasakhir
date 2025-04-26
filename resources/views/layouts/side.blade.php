@@ -72,6 +72,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item menu-open">
+                        <a href="{{ route('jenis.index') }}" class="nav-link active">
+                            <i class="nav-icon bi bi-speedometer"></i>
+                            <p>
+                                jenis sampah
+                            </p>
+                        </a>
+                    </li>   
                 @endif
                 @if (Auth::user()->role === 'user')
                     <li class="nav-item menu-open">
