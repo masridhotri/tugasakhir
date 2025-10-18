@@ -4,7 +4,6 @@
         <!--begin::Brand Link-->
         <a href="./index.html" class="brand-link">
             <!--begin::Brand Image-->
-            <img src="../../dist/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow" />
             <!--end::Brand Image-->
             <!--begin::Brand Text-->
             <span class="brand-text fw-light">ecoBank</span>
@@ -51,14 +50,14 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item menu-open">
+                    {{-- <li class="nav-item menu-open">
                         <a href="/first" class="nav-link active">
                             <i class="nav-icon bi bi-speedometer"></i>
                             <p>
                                 riwayat
                             </p>
                         </a>
-                    </li>
+                    </li> --}}
                 @endif
 
 
@@ -72,14 +71,14 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item menu-open">
+                    {{-- <li class="nav-item menu-open">
                         <a href="{{ route('jenis.index') }}" class="nav-link active">
                             <i class="nav-icon bi bi-speedometer"></i>
                             <p>
                                 jenis sampah
                             </p>
                         </a>
-                    </li>   
+                    </li>    --}}
                 @endif
                 @if (Auth::user()->role === 'user')
                     <li class="nav-item menu-open">

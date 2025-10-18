@@ -22,7 +22,7 @@ class RoleMiddleware
             if ($user->role === 'admin') {
                 return redirect()->route('dashboard.admin');
             } elseif ($user->role === 'operator' || $user->role === 'user') {
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard.operator');
             }
     
             abort(403, 'Akses Ditolak');

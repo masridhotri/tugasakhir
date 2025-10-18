@@ -3,7 +3,7 @@
 @section('content')
 <main class="app-main">
     <!-- Header -->
-    <div class="app-content-header py-3 bg-light shadow-sm">
+    {{-- <div class="app-content-header py-3 bg-light shadow-sm">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-md-6">
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Content -->
     <div class="app-content ">

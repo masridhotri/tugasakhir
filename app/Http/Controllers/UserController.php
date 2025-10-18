@@ -27,4 +27,10 @@ class UserController extends Controller
 
         
     }
+   public function destroy($id)
+{
+    DB::table('users')->where('id', $id)->delete();
+
+    return redirect()->back()->with('success', 'User berhasil dihapus!');
+}
 }

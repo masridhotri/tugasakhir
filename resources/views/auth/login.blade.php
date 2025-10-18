@@ -52,13 +52,10 @@
         <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
     </div>
 
-    <a data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="#!"
+    <a data-mdb-ripple-init class="btn btn-secondary btn-lg btn-block" style="background-color: #7c879e" href="#!"
         role="button">
-        <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
+        <i class="bi bi-google"></i>Continue with google
     </a>
-    <a data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" style="background-color: #55acee" href="#!"
-        role="button">
-        <i class="fab fa-twitter me-2"></i>Continue with Twitter</a>
 
 
 </x-guest-layout>

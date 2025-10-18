@@ -1,12 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="app">
-    <div class="app-content">
-        <div class="container-fluid py-4">
+    <main class="app">
+        <div class="app-content">
+            <div class="container-fluid py-4">
 
-            {{-- ===================== DASHBOARD UNTUK USER ===================== --}}
-            @if (Auth::user()->role === 'user')
+                {{-- ===================== DASHBOARD UNTUK USER ===================== --}}
                 <section class="app-main">
 
                     {{-- Header --}}
@@ -23,7 +22,8 @@
                             <div class="card shadow-sm text-center p-3 border-0">
                                 <div class="text-muted">Saldo</div>
                                 <h4 class="text-success fw-bold">Rp {{ number_format($saldo) }}</h4>
-                                <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
                                     Tarik Saldo
                                 </button>
                             </div>
@@ -105,13 +105,12 @@
                         </div>
                     </div>
                 </div>
-            @endif
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 
-{{-- ===================== SCRIPT UNTUK USER ===================== --}}
-@if (Auth::user()->role === 'user')
+    {{-- ===================== SCRIPT UNTUK USER ===================== --}}
+
     @php
         $trenData = $chartall ?? [10, 20, 15, 12, 9, 30, 25, 40, 38, 29, 20, 15];
     @endphp
@@ -144,30 +143,7 @@
             }
         });
     </script>
-@endif
 
-{{-- ===================== SCRIPT UNTUK OPERATOR ===================== --}}
-{{-- @if (Auth::user()->role === 'operator')
-    @php
-        $pengambilanData = $chartData ?? [5, 6, 7, 8, 6, 5, 9, 10, 8, 6, 4, 3];
-    @endphp
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        const pengambilanData = @json($pengambilanData);
-
-        new Chart(document.getElementById('chartPengambilanSampah'), {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                datasets: [{
-                    label: 'Jumlah Selesai',
-                    data: pengambilanData,
-                    backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                }]
-            }
-        });
-    </script>
-@endif --}}
+    {{-- ===================== SCRIPT UNTUK OPERATOR ===================== --}}
 @endsection

@@ -31,9 +31,20 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboardadmin', [DashboardController::class, 'admin'])->name('dashboard.admin');
 });
 
+Route::middleware(['auth', 'operator'])->group(function () {
+    Route::get('/dashboard/operator', [OperatorController::class, 'operator'])->name('dashboard.operator');
 
+    Route::get('/tabungan', [TabunganController::class, 'index'])->name('tabungan.index');
+    Route::post('/tabungan/new', [TabunganController::class, 'new'])->name('tabung.new');
+    Route::post('/tabungan/update/{id}', [TabunganController::class, 'update'])->name('tabung.update');
+    Route::post('/tabungan/sampai/{id}', [TabunganController::class, 'sampai'])->name('tabung.sampai');
+    Route::post('/tabungan/input/{id}', [TabunganController::class, 'input'])->name('tabung.input');
+    Route::post('/tabungan/store/{id}', [TabunganController::class, 'store'])->name('tabung.store');
+
+    Route::get('/enam', [OperatorController::class, 'enam'])->name('operator.enam');
+});
 Route::get('/dashboard', [DashboardController::class, 'indexe'])
-    ->middleware(['auth', 'verified', 'role:operator,user'])
+    ->middleware(['auth', 'verified', 'role:user'])
     ->name('dashboard');
 
 Route::middleware('auth')->group(function () { 
@@ -48,13 +59,12 @@ Route::middleware('auth')->group(function () {
     Route::get('saldouser', [NasabahController::class, 'saldouser'])->name('saldouser');
     Route::post('/tarik-saldo', [NasabahController::class, 'tarik'])->name('saldo');
 
-
-
-
     route::get('jenis', [JenimutasiController::class, 'index'])->name('jenis.index');
     route::post('/jenis/store', [JenimutasiController::class, 'store'])->name('jenis.store');
     route::post('/jenis/edit/{id}',[JenimutasiController::class, 'edit'])->name('jenis.edit');
     Route::post('/jenis/destroy/{id}', [JenimutasiController::class, 'destroy'])->name('jenis.destroy');
+
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
 
     Route::get('/profile', [DashboardController::class, 'profile'])->name('profile.edit');
@@ -66,11 +76,7 @@ Route::middleware('auth')->group(function () {
 
     route::get('tabungan',[TabunganController::class, 'index'])->name('tabungan.index');
     route::post('/tabungan/new',[TabunganController::class, 'new'])->name('tabung.new');
-    route::post('/tabungan/update/{id}',[TabunganController::class, 'update'])->name('tabung.update');
-    route::post('/tabungan/sampai/{id}',[TabunganController::class, 'sampai'])->name('tabung.sampai');
-    route::post('/tabungan/input/{id}',[TabunganController::class, 'input'])->name('tabung.input');
-
-    Route::post('/tabungan/store/{id}', [TabunganController::class, 'store'])->name('tabung.store');
+   
 
     route::get('first',[TestingController::class, 'first'])->name('satu');
     route::get('seccond',[TestingController::class, 'seccond'])->name('dua');

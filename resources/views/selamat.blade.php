@@ -66,7 +66,7 @@
 
         /* Hero Section Enhancements */
         .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/Background_Bsampah.jpg');
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://greeneration.org/id/wp-content/uploads/2023/07/bank-sampah.jpg');
             ;
             background-size: cover;
             background-position: center;
@@ -347,10 +347,10 @@
                         <div class="carousel-item active">
                             <div class="row justify-content-center align-items-center gx-4">
                                 <div class="col-md-6 mb-4 text-center">
-                                    <img src="images/pict_6.jpg" alt="AREI" class="brand-img">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycZKoKNL_My2sPHF2P2amYCpzML9kWIJRhg&s" alt="AREI" class="brand-img">
                                 </div>
                                 <div class="col-md-6 mb-4 text-center">
-                                    <img src="images/pict_2.jpg" alt="Consina" class="brand-img">
+                                    <img src="https://kemahasiswaan.bsi.ac.id/assets/images/berita/32420250220105158bank-sampa.jpg" alt="Consina" class="brand-img">
                                 </div>
                             </div>
                         </div>
@@ -359,27 +359,14 @@
                         <div class="carousel-item">
                             <div class="row justify-content-center align-items-center gx-4">
                                 <div class="col-md-6 mb-4 text-center">
-                                    <img src="images/pict_3.jpg" alt="Aerostreet" class="brand-img">
+                                    <img src="https://asset-2.tribunnews.com/tribunnews/foto/bank/images/bank-sampah-yang-didirikan-mitra-pinasthika-mustika-tbk-mpmx.jpg   " alt="Aerostreet" class="brand-img">
                                 </div>
-                                <div class="col-md-6 mb-4 text-center">
-                                    <img src="images/pict_4.jpg" alt="Osprey" class="brand-img">
-                                </div>
+                               
                             </div>
                         </div>
 
                         <!-- Slide 3 -->
-                        <div class="carousel-item">
-                            <div class="row justify-content-center align-items-center gx-4">
-                                <div class="col-md-6 mb-4 text-center">
-                                    <img src="images/pict_5.jpg" alt="Antarestar" class="brand-img">
-                                </div>
-                                <div class="col-md-6 mb-4 text-center">
-                                    <img src="images/pict_7.jpg" alt="Big Armour" class="brand-img">
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                    
 
                     <!-- Controls -->
                     <button class="carousel-control-prev" type="button" data-bs-target="#brandsCarousel"
@@ -455,7 +442,7 @@
                         {{-- <a href="#" class="btn btn-primary mt-3">Lihat Katalog Kami</a> --}}
                     </div>
                     <div class="col-lg-4 ps-lg-5 mt-4 mt-lg-0">
-                        <img src="/images/pict_1.png" alt="Our Team" class="img-fluid rounded-3 shadow">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDBY-WpvDpOVWVDmVujkJIsElBiMTwJLuabA&s" alt="Our Team" class="img-fluid rounded-3 shadow">
                     </div>
                 </div>
             </div>
@@ -521,10 +508,10 @@
                     <!-- CARD TEMPLATE -->
                     <div class="col-lg-3 col-md-6">
                         <div class="team-card shadow-lg rounded-4 overflow-hidden h-100 text-center bg-white">
-                            <img src="images/Kamto_P.jpg" alt="Ridho" class="w-100 team-img">
+            {{-- rc="images/Kamto_P.jpg" alt="Ridho" class="w-100  --}}
                             <div class="p-3">
                                 <h5 class="fw-bold mb-1">RIDHO TRI HARYANTO</h5>
-                                <p class="text-muted mb-2">Backend</p>
+                                <p class="text-muted mb-2">Fullstack</p>
                                 <div class="social-icons d-flex justify-content-center gap-3">
                                     <a href="https://www.instagram.com/kamazto/" class="text-dark fs-5"><i
                                             class="fab fa-instagram"></i></a>
@@ -536,10 +523,9 @@
                     <!-- IQBAL -->
                     <div class="col-lg-3 col-md-6">
                         <div class="team-card shadow-lg rounded-4 overflow-hidden h-100 text-center bg-white">
-                            <img src="images/Iqbal_P2.jpg" alt="Iqbal" class="w-100 team-img">
                             <div class="p-3">
-                                <h5 class="fw-bold mb-1">MUHAMMAD IQBAL P</h5>
-                                <p class="text-muted mb-2">UNIVERSITAS MANCING SEDUNIA</p>
+                                <h5 class="fw-bold mb-1">ZIDAN PUTRA RAMDHANA</h5>
+                                <p class="text-muted mb-2">Divisi operator</p>
                                 <div class="social-icons d-flex justify-content-center gap-3">
                                     <a href="https://www.instagram.com/ball_pmks/" class="text-dark fs-5"><i
                                             class="fab fa-instagram"></i></a>
@@ -551,10 +537,10 @@
                     <!-- SHALSABILA -->
                     <div class="col-lg-3 col-md-6">
                         <div class="team-card shadow-lg rounded-4 overflow-hidden h-100 text-center bg-white">
-                            <img src="images/Shalsa_P2.jpg" alt="Shalsabila" class="w-100 team-img">
+            {{-- rc="images/Shalsa_P2.jpg" alt="Shalsabila" class="w-100  --}}
                             <div class="p-3">
-                                <h5 class="fw-bold mb-1">SHALSABILA SUCI R</h5>
-                                <p class="text-muted mb-2">UI/UX</p>
+                                <h5 class="fw-bold mb-1">AMIRULTAURA</h5>
+                                <p class="text-muted mb-2">Divisi RnD</p>
                                 <div class="social-icons d-flex justify-content-center gap-3">
                                     <a href="https://www.instagram.com/shalsassr/" class="text-dark fs-5"><i
                                             class="fab fa-instagram"></i></a>
@@ -566,9 +552,35 @@
                     <!-- BAYU -->
                     <div class="col-lg-3 col-md-6">
                         <div class="team-card shadow-lg rounded-4 overflow-hidden h-100 text-center bg-white">
-                            <img src="images/Bayy_P2.jpg" alt="Bayu" class="w-100 team-img">
+            {{-- rc="images/Bayy_P2.jpg" alt="Bayu" class="w-100  --}}
                             <div class="p-3">
-                                <h5 class="fw-bold mb-1">BAYU GALIH R</h5>
+                                <h5 class="fw-bold mb-1">GHANNETO MAYLANO YULIAN</h5>
+                                <p class="text-muted mb-2">Divisi kominfo</p>
+                                <div class="social-icons d-flex justify-content-center gap-3">
+                                    <a href="https://www.instagram.com/rsxbayy/" class="text-dark fs-5"><i
+                                            class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="team-card shadow-lg rounded-4 overflow-hidden h-100 text-center bg-white">
+            {{-- rc="images/Bayy_P2.jpg" alt="Bayu" class="w-100  --}}
+                            <div class="p-3">
+                                <h5 class="fw-bold mb-1">M FAISAL HANIF S</h5>
+                                <p class="text-muted mb-2">Divisi Rnd 2 </p>
+                                <div class="social-icons d-flex justify-content-center gap-3">
+                                    <a href="https://www.instagram.com/rsxbayy/" class="text-dark fs-5"><i
+                                            class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="team-card shadow-lg rounded-4 overflow-hidden h-100 text-center bg-white">
+            {{-- rc="images/Bayy_P2.jpg" alt="Bayu" class="w-100  --}}
+                            <div class="p-3">
+                                <h5 class="fw-bold mb-1">TRISTANIA SAFIRA SALSABISA M</h5>
                                 <p class="text-muted mb-2">UI/UX</p>
                                 <div class="social-icons d-flex justify-content-center gap-3">
                                     <a href="https://www.instagram.com/rsxbayy/" class="text-dark fs-5"><i
